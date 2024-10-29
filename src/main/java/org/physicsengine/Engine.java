@@ -9,7 +9,7 @@ public class Engine {
         this.tickRate = tickRate;
     }
     public void start() {
-        System.out.println("Engine started");
+        PhysicsSim.LOGGER.info("Engine started");
         isRunning = true;
         this.run();
     }
@@ -21,7 +21,7 @@ public class Engine {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(name + " running, tick: " + tick);
+            PhysicsSim.LOGGER.info(name + " running, tick: " + tick);
             tick++;
         }
     }
