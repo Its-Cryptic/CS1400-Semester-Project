@@ -50,6 +50,7 @@ public class Engine implements Runnable {
             this.evaluatePhysics();
             PhysicsObject physicsObject = this.physicsObjects.get(0);
             if (physicsObject != null) LOGGER.info("PhysicsObject position: " + physicsObject.getPosition());
+            LOGGER.info("Tick: " + this.tick + ", Seconds: " + this.getSecondsElapsed());
 
             try {
                 long sleepTime = (long) (nsPerTick - (System.nanoTime() - now)) / 1_000_000;
@@ -73,30 +74,8 @@ public class Engine implements Runnable {
 
     private void evaluatePhysics() {
         for (PhysicsObject physicsObject : this.physicsObjects) {
-            float mass = physicsObject.getMass();
-
-
-            if (mass <= 0) continue;
-
-            float dt = 1f;
-
-            Vector3f netForce = physicsObject.getNetForce().getForce();
-
-            // Calculate acceleration: a = F / m
-            Vector3f acceleration = new Vector3f(netForce).div(mass);
-
-            // Update velocity: v_new = v_old + a * dt
-            Vector3f newVelocity = new Vector3f(physicsObject.getVelocity());
-            newVelocity.add(new Vector3f(acceleration).mul(dt));
-
-            // Update position: x_new = x_old + v_new * dt
-            Vector3f newPosition = new Vector3f(physicsObject.getPosition());
-            newPosition.add(new Vector3f(newVelocity).mul(dt));
-
-            physicsObject.setVelocity(newVelocity);
-            physicsObject.setPosition(newPosition);
-
-            physicsObject.getNetForce().setForce(new Vector3f(0, 0, 0));
+            physicsObject.addHistory(physicsObject.getPosition());
+            physicsObject.evaluatePhysics();
         }
     }
 
@@ -106,5 +85,21 @@ public class Engine implements Runnable {
 
     public List<PhysicsObject> getPhysicsObjects() {
         return this.physicsObjects;
+    }
+
+    public int getTickRate() {
+        return this.tickRate;
+    }
+
+    public float getSecondsPerTick() {
+        return 1.0f / this.tickRate;
+    }
+
+    public long getTicksElapsed() {
+        return this.tick;
+    }
+
+    public long getSecondsElapsed() {
+        return this.tick / this.tickRate;
     }
 }

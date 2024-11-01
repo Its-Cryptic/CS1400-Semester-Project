@@ -1,0 +1,28 @@
+{
+    "constants": [
+        {
+            "name": "g",
+            "value": -9.81
+        },
+        {
+            "name": "a",
+            "value": 2.5
+        }
+    ],
+    "objects": [
+        {
+            "name": "projectile",
+            "initial_values": {
+                "mass": 1,
+                "position": [0, 0, 0],
+                "velocity": [20, 40, 0]
+            },
+            "forces": [
+                {
+                    "name": "gravity",
+                    "force": [0, "g * mass", 0]
+                }
+            ]
+        }
+    ]
+}

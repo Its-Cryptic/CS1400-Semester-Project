@@ -1,19 +1,24 @@
 package org.physicsengine.core;
 
 import org.joml.Vector3f;
+import org.physicsengine.PhysicsSim;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicsObject {
+    private String name;
     private Vector3f position;
     private float mass;
     private Vector3f velocity;
     private List<Force> forces;
+    private final List<Vector3f> history;
+
 
     public PhysicsObject() {
         this.position = new Vector3f();
         this.forces = new ArrayList<>();
+        this.history = new ArrayList<>();
     }
 
     public Vector3f getPosition() {
@@ -62,5 +67,40 @@ public class PhysicsObject {
             netForce.add(force);
         }
         return netForce;
+    }
+
+    public void evaluatePhysics() {
+        float mass = getMass();
+        addHistory(getPosition());
+
+        if (mass <= 0) return;
+
+        float dt = PhysicsSim.engine.getSecondsPerTick();
+
+        Vector3f netForce = getNetForce().getForce();
+
+        // Calculate acceleration: a = F / m
+        Vector3f acceleration = new Vector3f(netForce).div(mass);
+
+        // Update velocity: v_new = v_old + a * dt
+        Vector3f newVelocity = new Vector3f(getVelocity());
+        newVelocity.add(new Vector3f(acceleration).mul(dt));
+
+        // Update position: x_new = x_old + v_new * dt
+        Vector3f newPosition = new Vector3f(getPosition());
+        newPosition.add(new Vector3f(newVelocity).mul(dt));
+
+        setVelocity(newVelocity);
+        setPosition(newPosition);
+
+        getNetForce().setForce(new Vector3f(0, 0, 0));
+    }
+
+    public List<Vector3f> getHistory() {
+        return history;
+    }
+
+    public void addHistory(Vector3f position) {
+        history.add(position);
     }
 }

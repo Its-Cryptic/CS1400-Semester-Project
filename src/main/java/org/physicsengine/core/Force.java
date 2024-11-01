@@ -3,6 +3,7 @@ package org.physicsengine.core;
 import org.joml.Vector3f;
 
 public class Force {
+    private String name;
     private Vector3f force;
 
     public Force() {

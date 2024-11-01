@@ -21,6 +21,11 @@ dependencies {
     implementation("org.joml", "joml", jomlVersion)
 
     implementation("org.jspecify:jspecify:1.0.0")
+
+    implementation("org.json:json:20240303")
+
+    implementation("org.openjdk.nashorn:nashorn-core:15.4")
+
 }
 
 tasks.test {

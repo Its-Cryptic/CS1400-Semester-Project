@@ -19,7 +19,7 @@ public class Graph extends JFrame {
     private static final Logger LOGGER = LogUtils.getLogger();
     private CvGraphingCalculator canvas;
     private final AtomicBoolean running = new AtomicBoolean(true);
-    private static final List<Vector3f> pastPositions = new ArrayList<>();
+    //private static final List<Vector3f> pastPositions = new ArrayList<>();
 
     public Graph() {
         super("Graph");
@@ -87,23 +87,32 @@ public class Graph extends JFrame {
             Vector3f pos;
             synchronized (engine) {
                 pos = engine.getPhysicsObjects().get(0).getPosition();
-                pastPositions.add(new Vector3f(pos));
             }
             Vector2i mid = new Vector2i(max.x() / 2, max.y() / 2);
 
             int scale = 25;
 
+            Vector2i point = new Vector2i((int) pos.x(), (int) -pos.y());
+            point.add(mid);
+            point.sub(new Vector2i(scale / 2));
+
             g.setColor(Color.BLUE);
-            g.drawOval((int) pos.x() + mid.x() - scale/2, (int) pos.y() + mid.y() - scale/2, scale, scale);
+            g.drawOval(point.x(), point.y(), scale, scale);
             //LOGGER.info("Drawing point at: " + pos);
         }
 
         void drawPath(Graphics g, Vector2i max) {
+            Engine engine = PhysicsSim.engine;
+            List<Vector3f> pastPositions;
+            synchronized (engine) {
+                pastPositions = engine.getPhysicsObjects().get(0).getHistory();
+            }
             Vector2i mid = new Vector2i(max.x() / 2, max.y() / 2);
             for (int i = 0; i < pastPositions.size() - 1; i++) {
-                Vector3f pos1 = pastPositions.get(i);
-                Vector3f pos2 = pastPositions.get(i + 1);
-                if (pos2 == null) break;
+                Vector3f pos1 = new Vector3f(pastPositions.get(i));
+                pos1.y *= -1;
+                Vector3f pos2 = new Vector3f(pastPositions.get(i + 1));
+                pos2.y *= -1;
                 g.setColor(Color.RED);
                 g.drawLine((int) pos1.x() + mid.x(), (int) pos1.y() + mid.y(), (int) pos2.x() + mid.x(), (int) pos2.y() + mid.y());
             }
