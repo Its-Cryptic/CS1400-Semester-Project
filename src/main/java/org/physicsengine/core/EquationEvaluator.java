@@ -25,33 +25,4 @@ public class EquationEvaluator {
         bindings.putAll(variables);
         return (double) engine.eval(equation, bindings);
     }
-
-    public enum Operator {
-        ADD('+', (a, b) -> a + b),
-        SUBTRACT('-', (a, b) -> a - b),
-        MULTIPLY('*', (a, b) -> a * b),
-        DIVIDE('/', (a, b) -> a / b),
-        EXPONENT('^', Math::pow),
-        MODULUS('%', (a, b) -> a % b);
-        private final char operator;
-        private final BiFunction<Double, Double, Double> operation;
-        Operator(char operator, BiFunction<Double, Double, Double> operation) {
-            this.operator = operator;
-            this.operation = operation;
-        }
-
-        public double operate(@NonNull double a, @NonNull double b) {
-            return operation.apply(a, b);
-        }
-
-        @Nullable
-        public static Operator fromChar(char operator) {
-            for (Operator op : values()) {
-                if (op.operator == operator) {
-                    return op;
-                }
-            }
-            return null;
-        }
-    }
 }

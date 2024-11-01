@@ -14,14 +14,12 @@ public class Engine implements Runnable {
     private int tickRate = 20;
     private long tick;
     private String name;
-    private final List<PhysicsObject> physicsObjects;
     private final PhysicsEnvironment physicsEnvironment;
 
     public Engine(int tickRate, PhysicsEnvironment physicsEnvironment, String name) {
         this.tickRate = tickRate;
         this.physicsEnvironment = physicsEnvironment;
         this.name = name;
-        this.physicsObjects = new ArrayList<>();
         engineThread = new Thread(this);
         engineThread.setName(name + " Thread");
     }
@@ -49,8 +47,8 @@ public class Engine implements Runnable {
             //LOGGER.info(this.name + " running, tick: " + this.tick);
             //LOGGER.info("Thread: " + Thread.currentThread().getName());
             this.tick++;
-            this.evaluatePhysics();
-            PhysicsObject physicsObject = this.physicsObjects.get(0);
+            this.physicsEnvironment.evaluatePhysics();
+            PhysicsObject physicsObject = this.physicsEnvironment.getPhysicsObjects().get(0);
             if (physicsObject != null) LOGGER.info("PhysicsObject position: " + physicsObject.getPosition());
             LOGGER.info("Tick: " + this.tick + ", Seconds: " + this.getSecondsElapsed());
 
@@ -74,19 +72,8 @@ public class Engine implements Runnable {
         this.name = name;
     }
 
-    private void evaluatePhysics() {
-        for (PhysicsObject physicsObject : this.physicsObjects) {
-            //physicsObject.addHistory(physicsObject.getPosition());
-            physicsObject.evaluatePhysics();
-        }
-    }
-
-    public void addPhysicsObject(PhysicsObject physicsObject) {
-        this.physicsObjects.add(physicsObject);
-    }
-
-    public List<PhysicsObject> getPhysicsObjects() {
-        return this.physicsObjects;
+    public PhysicsEnvironment getPhysicsEnvironment() {
+        return this.physicsEnvironment;
     }
 
     public int getTickRate() {

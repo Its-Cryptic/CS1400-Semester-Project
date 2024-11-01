@@ -22,6 +22,16 @@ public class PhysicsEnvironment {
         return physicsObjects;
     }
 
+    public void evaluatePhysics() {
+        for (PhysicsObject physicsObject : this.physicsObjects) {
+            physicsObject.evaluatePhysics();
+        }
+    }
+
+    public void addPhysicsObject(PhysicsObject physicsObject) {
+        this.physicsObjects.add(physicsObject);
+    }
+
     public Map<String, Double> compileAllVariables() {
         Map<String, Double> allVariables = new HashMap<>(this.constants);
         for (PhysicsObject physicsObject : this.physicsObjects) {

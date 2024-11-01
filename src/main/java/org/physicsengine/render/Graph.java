@@ -83,7 +83,7 @@ public class Graph extends JFrame {
             Engine engine = PhysicsSim.engine;
             Vector3f pos;
             synchronized (engine) {
-                pos = engine.getPhysicsObjects().get(0).getPosition();
+                pos = engine.getPhysicsEnvironment().getPhysicsObjects().get(0).getPosition();
             }
             Vector2i mid = new Vector2i(max.x() / 2, max.y() / 2);
 
@@ -102,7 +102,7 @@ public class Graph extends JFrame {
             Engine engine = PhysicsSim.engine;
             List<Vector3f> pastPositions;
             synchronized (engine) {
-                pastPositions = engine.getPhysicsObjects().get(0).getHistory();
+                pastPositions = engine.getPhysicsEnvironment().getPhysicsObjects().get(0).getHistory();
             }
             Vector2i mid = new Vector2i(max.x() / 2, max.y() / 2);
             for (int i = 0; i < pastPositions.size() - 1; i++) {

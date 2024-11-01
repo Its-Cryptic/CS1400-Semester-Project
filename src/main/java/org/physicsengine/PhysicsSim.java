@@ -11,16 +11,16 @@ public class PhysicsSim {
     public static Engine engine;
     public static void main(String[] args) throws Exception {
         LOGGER.info("PhysicsSim started");
-        engine = new Engine(60, JsonParser.loadPhysicsEnvironment("projectile.json"));
-        String function = "1.34 * 2.5 + 1";
-        LOGGER.info("Evaluate: " + function + " = " + EquationEvaluator.eval(function));
+
+        PhysicsEnvironment physicsEnvironment = JsonParser.loadPhysicsEnvironment("projectile.json");
 
         PhysicsObject physicsObject = new PhysicsObject();
         physicsObject.setMass(30);
         physicsObject.setVelocity(new Vector3f(20f, 40f, 0f));
         physicsObject.addForce(new Force(new Vector3f(0f, -30f*9.81f, 0f)));
-        engine.addPhysicsObject(physicsObject);
+        physicsEnvironment.addPhysicsObject(physicsObject);
 
+        engine = new Engine(60, physicsEnvironment);
         engine.start();
 
         new Graph();
