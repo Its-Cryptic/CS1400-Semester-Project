@@ -11,10 +11,9 @@ public class PhysicsSim {
     public static Engine engine;
     public static void main(String[] args) throws Exception {
         LOGGER.info("PhysicsSim started");
-        engine = new Engine(20);
-        JsonParser.loadPhysicsEnvironment("projectile.json");
-        //String function = "1.34 * 2.5 + 1";
-        //LOGGER.info("Evaluate: " + function + " = " + EquationEvaluator.eval(function));
+        engine = new Engine(60, JsonParser.loadPhysicsEnvironment("projectile.json"));
+        String function = "1.34 * 2.5 + 1";
+        LOGGER.info("Evaluate: " + function + " = " + EquationEvaluator.eval(function));
 
         PhysicsObject physicsObject = new PhysicsObject();
         physicsObject.setMass(30);

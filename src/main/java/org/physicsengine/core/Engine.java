@@ -15,17 +15,19 @@ public class Engine implements Runnable {
     private long tick;
     private String name;
     private final List<PhysicsObject> physicsObjects;
+    private final PhysicsEnvironment physicsEnvironment;
 
-    public Engine(int tickRate, String name) {
+    public Engine(int tickRate, PhysicsEnvironment physicsEnvironment, String name) {
         this.tickRate = tickRate;
+        this.physicsEnvironment = physicsEnvironment;
         this.name = name;
         this.physicsObjects = new ArrayList<>();
         engineThread = new Thread(this);
         engineThread.setName(name + " Thread");
     }
 
-    public Engine(int tickRate) {
-        this(tickRate, "Engine");
+    public Engine(int tickRate, PhysicsEnvironment physicsEnvironment) {
+        this(tickRate, physicsEnvironment, "Engine");
     }
 
     public void start() {
@@ -74,7 +76,7 @@ public class Engine implements Runnable {
 
     private void evaluatePhysics() {
         for (PhysicsObject physicsObject : this.physicsObjects) {
-            physicsObject.addHistory(physicsObject.getPosition());
+            //physicsObject.addHistory(physicsObject.getPosition());
             physicsObject.evaluatePhysics();
         }
     }

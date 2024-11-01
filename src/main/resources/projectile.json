@@ -20,7 +20,7 @@
             "forces": [
                 {
                     "name": "gravity",
-                    "force": [0, "g * mass", 0]
+                    "force": [0, "g * projectile.mass", 0]
                 }
             ]
         }

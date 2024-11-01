@@ -12,14 +12,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Graph extends JFrame {
     private static final Logger LOGGER = LogUtils.getLogger();
     private CvGraphingCalculator canvas;
-    private final AtomicBoolean running = new AtomicBoolean(true);
-    //private static final List<Vector3f> pastPositions = new ArrayList<>();
 
     public Graph() {
         super("Graph");

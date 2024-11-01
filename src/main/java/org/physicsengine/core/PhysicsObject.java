@@ -92,8 +92,6 @@ public class PhysicsObject {
 
         setVelocity(newVelocity);
         setPosition(newPosition);
-
-        getNetForce().setForce(new Vector3f(0, 0, 0));
     }
 
     public List<Vector3f> getHistory() {
@@ -102,5 +100,13 @@ public class PhysicsObject {
 
     public void addHistory(Vector3f position) {
         history.add(position);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
