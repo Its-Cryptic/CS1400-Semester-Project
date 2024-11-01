@@ -11,12 +11,13 @@ public class Engine implements Runnable {
     private static final Logger LOGGER = LogUtils.getLogger();
     private final Thread engineThread;
     private boolean isRunning = false;
-    private int tickRate = 20;
+    private int tickRate;
     private long tick;
     private String name;
     private final PhysicsEnvironment physicsEnvironment;
 
     public Engine(int tickRate, PhysicsEnvironment physicsEnvironment, String name) {
+        if (tickRate <= 0) throw new IllegalArgumentException("Tick rate must be greater than 0");
         this.tickRate = tickRate;
         this.physicsEnvironment = physicsEnvironment;
         this.name = name;
