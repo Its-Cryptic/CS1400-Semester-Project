@@ -42,7 +42,7 @@ public class JsonParser {
         LOGGER.info("Test: " + test);
         JSONArray objectsJson = jsonObject.getJSONArray("objects");
         //LOGGER.info("Parsed JSON: " + jsonObject);
-        LOGGER.info("Parsed constants: " + constants);
+        //LOGGER.info("Parsed constants: " + constantsJson);
         LOGGER.info("Parsed objects: " + objectsJson);
         return new PhysicsEnvironment(constants, physicsObjects);
     }
