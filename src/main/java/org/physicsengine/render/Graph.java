@@ -114,5 +114,7 @@ public class Graph extends JFrame {
                 g.drawLine((int) pos1.x() + mid.x(), (int) pos1.y() + mid.y(), (int) pos2.x() + mid.x(), (int) pos2.y() + mid.y());
             }
         }
+
+
     }
 }
