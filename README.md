@@ -11,6 +11,15 @@ This project is a highly configurable physics engine that can take a JSON config
 ```bash
 java -jar PhysSim.1.0.jar
 ```
+This will launch a window for a simple projectile motion demo.
+
+If you want to access the dynamic environments, you can add the following argument:
+```
+-env:projectile.json
+```
+Currently, there are two examples built into the program, [projectile.json](https://github.com/Its-Cryptic/CS1400-Semester-Project/blob/main/src/main/resources/projectile.json) and [orbit.json](https://github.com/Its-Cryptic/CS1400-Semester-Project/blob/main/src/main/resources/orbit.json)
+
+You can make your own environment configs and run it similarly by having the jar and JSON files in the same folder.
 
 ## JSON File Structure:
 ```
