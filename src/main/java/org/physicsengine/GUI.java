@@ -10,12 +10,13 @@ import java.text.DecimalFormat;
 
 public class GUI {
 
-    static float gravityAcc = (float) -9.81;
-    static float x_velocity;
-    static float y_velocity;
-    static float objectMass;
+    public static float gravityAcc = (float) -9.81;
+    public static float x_velocity;
+    public static float y_velocity;
+    public static float objectMass;
+    public static boolean isRunning = false;
 
-    public static void main(String args[]){
+    public static void run(){
 
         JFrame jFrame = new JFrame("Environment Control Panel");
         DecimalFormat formatter = new DecimalFormat();
@@ -79,7 +80,6 @@ public class GUI {
 
         ActionListener actionListener = new ActionListener() {
             @Override
-
             public void actionPerformed(ActionEvent e) {
 
                 if (("Earth").equals(e.getActionCommand())){
@@ -103,18 +103,16 @@ public class GUI {
 
                 }
                 if (("Start").equals(e.getActionCommand())){
-                    PhysicsSim physicsSim = new PhysicsSim();
                     try {
                         x_velocity = Float.parseFloat(x_vel.getText());
                         y_velocity = Float.parseFloat(y_vel.getText());
                         objectMass = Float.parseFloat(objMass.getText());
-                        physicsSim.run();
+                        isRunning = true;
+                        jFrame.dispose();
                     }
                     catch (Exception ex){
-
                         System.out.println(ex.getMessage());
                         errorLab.setText("⚠ Please complete all fields.");
-
                     }
                 }
 
