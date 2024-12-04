@@ -6,16 +6,18 @@ import org.joml.Vector2i;
 import org.joml.Vector3f;
 import org.physicsengine.PhysicsSim;
 import org.physicsengine.core.Engine;
+import org.physicsengine.core.PhysicsObject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class Graph extends JFrame {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(Graph.class);
     private CvGraphingCalculator canvas;
 
     public Graph() {
@@ -81,40 +83,57 @@ public class Graph extends JFrame {
 
         void drawPoints(Graphics g, Vector2i max) {
             Engine engine = PhysicsSim.engine;
-            Vector3f pos;
+            List<PhysicsObject> physicsObjects;
             synchronized (engine) {
-                pos = engine.getPhysicsEnvironment().getPhysicsObjects().get(0).getPosition();
+                physicsObjects = engine.getPhysicsEnvironment().getPhysicsObjects();
             }
             Vector2i mid = new Vector2i(max.x() / 2, max.y() / 2);
 
             int scale = 25;
 
-            Vector2i point = new Vector2i((int) pos.x(), (int) -pos.y());
-            point.add(mid);
-            point.sub(new Vector2i(scale / 2));
+            for (PhysicsObject object : physicsObjects) {
+                Vector3f pos = object.getPosition();
+                Vector2i point = new Vector2i((int) pos.x(), (int) -pos.y());
+                point.add(mid);
+                point.sub(new Vector2i(scale / 2));
 
-            g.setColor(Color.BLUE);
-            g.drawOval(point.x(), point.y(), scale, scale);
-            //LOGGER.info("Drawing point at: " + pos);
+                g.setColor(Color.BLUE);
+                g.drawOval(point.x(), point.y(), scale, scale);
+                g.drawChars(object.getName().toCharArray(), 0, object.getName().length(), point.x(), point.y() - 20);
+                String position = "Position: (" + formatFloat(pos.x()) + ", " + formatFloat(pos.y()) + ")";
+                g.drawChars(position.toCharArray(), 0, position.length(), point.x(), point.y() - 5);
+            }
+        }
+
+        private float formatFloat(float f) {
+            return (float) Math.round(f * 100) / 100;
         }
 
         void drawPath(Graphics g, Vector2i max) {
             Engine engine = PhysicsSim.engine;
-            List<Vector3f> pastPositions;
+
+            List<PhysicsObject> physicsObjects;
             synchronized (engine) {
-                pastPositions = engine.getPhysicsEnvironment().getPhysicsObjects().get(0).getHistory();
+                physicsObjects = engine.getPhysicsEnvironment().getPhysicsObjects();
             }
+
             Vector2i mid = new Vector2i(max.x() / 2, max.y() / 2);
-            for (int i = 0; i < pastPositions.size() - 1; i++) {
-                Vector3f pos1 = new Vector3f(pastPositions.get(i));
-                pos1.y *= -1;
-                Vector3f pos2 = new Vector3f(pastPositions.get(i + 1));
-                pos2.y *= -1;
-                g.setColor(Color.RED);
-                g.drawLine((int) pos1.x() + mid.x(), (int) pos1.y() + mid.y(), (int) pos2.x() + mid.x(), (int) pos2.y() + mid.y());
+            for (int i = 0; i < physicsObjects.size(); i++) {
+                PhysicsObject object = physicsObjects.get(i);
+                List<Vector3f> history = object.getHistory();
+                for (int j = 0; j < history.size() - 1; j++) {
+                    Vector3f pos1 = new Vector3f(history.get(j));
+                    pos1.y *= -1;
+                    Vector3f pos2 = new Vector3f(history.get(j + 1));
+                    pos2.y *= -1;
+                    g.setColor(colors.get(i % colors.size()));
+                    g.drawLine((int) pos1.x() + mid.x(), (int) pos1.y() + mid.y(), (int) pos2.x() + mid.x(), (int) pos2.y() + mid.y());
+                }
             }
         }
 
 
     }
+
+    private static List<Color> colors = List.of(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.PINK, Color.CYAN, Color.MAGENTA);
 }

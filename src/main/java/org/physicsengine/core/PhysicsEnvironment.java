@@ -24,7 +24,7 @@ public class PhysicsEnvironment {
 
     public void evaluatePhysics() {
         for (PhysicsObject physicsObject : this.physicsObjects) {
-            physicsObject.evaluatePhysics();
+            physicsObject.evaluatePhysics(this);
         }
     }
 
@@ -36,13 +36,13 @@ public class PhysicsEnvironment {
         Map<String, Double> allVariables = new HashMap<>(this.constants);
         for (PhysicsObject physicsObject : this.physicsObjects) {
             String name = physicsObject.getName();
-            allVariables.put(name + ".mass", (double) physicsObject.getMass());
-            allVariables.put(name + ".position.x", (double) physicsObject.getPosition().x);
-            allVariables.put(name + ".position.y", (double) physicsObject.getPosition().y);
-            allVariables.put(name + ".position.z", (double) physicsObject.getPosition().z);
-            allVariables.put(name + ".velocity.x", (double) physicsObject.getVelocity().x);
-            allVariables.put(name + ".velocity.y", (double) physicsObject.getVelocity().y);
-            allVariables.put(name + ".velocity.z", (double) physicsObject.getVelocity().z);
+            allVariables.put(name + "_mass", (double) physicsObject.getMass());
+            allVariables.put(name + "_position_x", (double) physicsObject.getPosition().x);
+            allVariables.put(name + "_position_y", (double) physicsObject.getPosition().y);
+            allVariables.put(name + "_position_z", (double) physicsObject.getPosition().z);
+            allVariables.put(name + "_velocity_x", (double) physicsObject.getVelocity().x);
+            allVariables.put(name + "_velocity_y", (double) physicsObject.getVelocity().y);
+            allVariables.put(name + "_velocity_z", (double) physicsObject.getVelocity().z);
         }
         return allVariables;
     }

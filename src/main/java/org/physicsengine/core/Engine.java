@@ -2,13 +2,9 @@ package org.physicsengine.core;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joml.Vector3f;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Engine implements Runnable {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(Engine.class);
     private final Thread engineThread;
     private boolean isRunning = false;
     private int tickRate;
@@ -50,8 +46,8 @@ public class Engine implements Runnable {
             this.tick++;
             this.physicsEnvironment.evaluatePhysics();
             PhysicsObject physicsObject = this.physicsEnvironment.getPhysicsObjects().get(0);
-            if (physicsObject != null) LOGGER.info("PhysicsObject position: " + physicsObject.getPosition());
-            LOGGER.info("Tick: " + this.tick + ", Seconds: " + this.getSecondsElapsed());
+            //if (physicsObject != null) LOGGER.info("PhysicsObject position: " + physicsObject.getPosition());
+            //LOGGER.info("Tick: " + this.tick + ", Seconds: " + this.getSecondsElapsed());
 
             try {
                 long sleepTime = (long) (nsPerTick - (System.nanoTime() - now)) / 1_000_000;

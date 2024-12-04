@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PhysicsSim {
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger(PhysicsSim.class);
     public static Engine engine;
     public static PhysicsEnvironment physicsEnvironment;
 
@@ -58,16 +58,10 @@ public class PhysicsSim {
             LOGGER.info("PhysicsSim started");
 
             physicsEnvironment = JsonParser.loadPhysicsEnvironment(environmentFile.get());
+            engine = new Engine(60, physicsEnvironment);
+            engine.start();
 
-//            PhysicsObject physicsObject = new PhysicsObject();
-//            physicsObject.setMass(GUI.objectMass);
-//            physicsObject.setVelocity(new Vector3f(GUI.x_velocity, GUI.y_velocity, 0f));
-//            physicsObject.addForce(new Force(new Vector3f(0f, GUI.objectMass*GUI.gravityAcc, 0f)));
-            //physicsEnvironment.addPhysicsObject(physicsObject);
-            //engine = new Engine(60, physicsEnvironment);
-            //engine.start();
-
-            //new Graph();
+            new Graph();
         }
     }
 }

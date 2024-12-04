@@ -1,6 +1,8 @@
 package org.physicsengine.core;
 
 import org.joml.Vector3f;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.physicsengine.PhysicsSim;
 
 import java.util.ArrayList;
@@ -19,6 +21,30 @@ public class PhysicsObject {
         this.position = new Vector3f();
         this.forces = new ArrayList<>();
         this.history = new ArrayList<>();
+    }
+
+    public static PhysicsObject fromJson(JSONObject object) {
+        PhysicsObject physicsObject = new PhysicsObject();
+        physicsObject.setName(object.getString("name"));
+        JSONObject initialValues = object.getJSONObject("initialValues");
+        physicsObject.setMass(initialValues.getFloat("mass"));
+        physicsObject.setPosition(new Vector3f(
+                initialValues.getJSONArray("position").getFloat(0),
+                initialValues.getJSONArray("position").getFloat(1),
+                initialValues.getJSONArray("position").getFloat(2)
+        ));
+        physicsObject.setVelocity(new Vector3f(
+                initialValues.getJSONArray("velocity").getFloat(0),
+                initialValues.getJSONArray("velocity").getFloat(1),
+                initialValues.getJSONArray("velocity").getFloat(2)
+        ));
+
+        JSONArray forces = object.getJSONArray("forces");
+        for (int i = 0; i < forces.length(); i++) {
+            JSONObject force = forces.getJSONObject(i);
+            physicsObject.addForce(Force.fromJson(force));
+        }
+        return physicsObject;
     }
 
     public Vector3f getPosition() {
@@ -61,15 +87,16 @@ public class PhysicsObject {
         forces.remove(force);
     }
 
-    public Force getNetForce() {
+    public Force getNetForce(PhysicsEnvironment environment) {
         Force netForce = new Force();
         for (Force force : forces) {
+            force.setForce(force.evaluate(environment));
             netForce.add(force);
         }
         return netForce;
     }
 
-    public void evaluatePhysics() {
+    public void evaluatePhysics(PhysicsEnvironment environment) {
         float mass = getMass();
         addHistory(getPosition());
 
@@ -77,7 +104,7 @@ public class PhysicsObject {
 
         float dt = PhysicsSim.engine.getSecondsPerTick();
 
-        Vector3f netForce = getNetForce().getForce();
+        Vector3f netForce = getNetForce(environment).getForce();
 
         // Calculate acceleration: a = F / m
         Vector3f acceleration = new Vector3f(netForce).div(mass);
@@ -108,5 +135,17 @@ public class PhysicsObject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "PhysicsObject{" +
+                "name='" + name + '\'' +
+                ", position=" + position +
+                ", mass=" + mass +
+                ", velocity=" + velocity +
+                ", forces=" + forces +
+                ", history=" + history +
+                '}';
     }
 }
