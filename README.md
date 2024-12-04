@@ -5,10 +5,9 @@ This project is a highly configurable physics engine that can take a JSON config
 
 
 # How to run:
-#### 1. Clone the repository
-#### 2. Load the gradle project (This is important! The project uses numerous libraries and will not run without them)
-#### 2. Build the project with gradle (Tasks -> build -> build)
-#### 3. Run the project with the following command:
+#### 1. Head over to [releases](https://github.com/Its-Cryptic/CS1400-Semester-Project/releases)
+#### 2. Download the latest release .jar file
+#### 3. Run with the following command
 ```bash
 java -jar PhysSim.1.0.jar
 ```
