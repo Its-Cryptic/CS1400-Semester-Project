@@ -58,7 +58,7 @@ publishing {
     publications {
         gpr(MavenPublication) {
             groupId = 'org.physicsengine'
-            artifactId = 'PhysSim'
+            artifactId = 'physsim'
             version = '1.0'
 
             from(components.java)
