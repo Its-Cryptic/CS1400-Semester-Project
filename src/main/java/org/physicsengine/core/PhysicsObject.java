@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicsObject {
-    private String name;
+    private String name = "PhysicsObject";
     private Vector3f position;
     private float mass;
     private Vector3f velocity;

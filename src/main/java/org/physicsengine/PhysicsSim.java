@@ -46,7 +46,11 @@ public class PhysicsSim {
             PhysicsObject projectile = new PhysicsObject();
             projectile.setMass(GUI.objectMass);
             projectile.setVelocity(new Vector3f(GUI.x_velocity, GUI.y_velocity, 0f));
-            projectile.addForce(new Force(new Vector3f(0f, GUI.objectMass*GUI.gravityAcc, 0f)));
+            Force gravity = new Force();
+            gravity.evals[0] = "0";
+            gravity.evals[1] = GUI.gravityAcc + "*" + GUI.objectMass;
+            gravity.evals[2] = "0";
+            projectile.addForce(gravity);
             physicsEnvironment.addPhysicsObject(projectile);
 
             engine = new Engine(60, physicsEnvironment);

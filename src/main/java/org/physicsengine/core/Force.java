@@ -9,7 +9,7 @@ import java.util.Map;
 public class Force {
     private String name;
     private Vector3f force;
-    private String[] evals = new String[3];
+    public String[] evals = new String[3];
 
     public Force() {
         this(new Vector3f());
