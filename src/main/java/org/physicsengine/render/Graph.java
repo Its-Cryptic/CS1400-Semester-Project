@@ -1,11 +1,11 @@
 package org.physicsengine.render;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
 import org.joml.Vector3f;
 import org.physicsengine.PhysicsSim;
 import org.physicsengine.core.Engine;
-import org.physicsengine.util.LogUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.util.List;
 
 
 public class Graph extends JFrame {
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private CvGraphingCalculator canvas;
 
     public Graph() {

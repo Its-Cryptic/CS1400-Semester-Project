@@ -1,4 +1,4 @@
-package org.physicsengine;
+package org.physicsengine.render;
 
 import javax.swing.*;
 import java.awt.*;

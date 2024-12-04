@@ -1,14 +1,14 @@
 package org.physicsengine.core;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector3f;
-import org.physicsengine.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Engine implements Runnable {
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final Thread engineThread;
     private boolean isRunning = false;
     private int tickRate;

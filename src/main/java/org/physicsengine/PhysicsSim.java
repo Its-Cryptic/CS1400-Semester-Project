@@ -2,8 +2,8 @@ package org.physicsengine;
 import org.apache.logging.log4j.*;
 import org.joml.Vector3f;
 import org.physicsengine.core.*;
+import org.physicsengine.render.GUI;
 import org.physicsengine.render.Graph;
-import org.physicsengine.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PhysicsSim {
-    public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static Engine engine;
     public static PhysicsEnvironment physicsEnvironment;
 
