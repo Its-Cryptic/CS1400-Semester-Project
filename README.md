@@ -1,4 +1,4 @@
-# CS1400-Semester-Project
+# CS1400-Semester-Project (Physics Simulation)
 Semester Project for CS1400
 
 This project is a highly configurable physics engine that can take a JSON config file and construct an environment with both static and dynamic forces.
